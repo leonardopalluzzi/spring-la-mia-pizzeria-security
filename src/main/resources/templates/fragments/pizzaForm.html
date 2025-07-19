@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="pizzaForm(pizza, endpoint)">
+    <form th:action="@{${endpoint}}" method="POST" th:object="${pizza}">
+
+        <input type="hidden" th:field="*{id}">
+
+        <!-- ingredients  -->
+        <ul class="list-unstyled">
+            <li th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" th:value="${ingredient.id}"
+                        th:id="|ingredient=${ingredient.id}|" th:field="${pizza.ingredients}" />
+                    <label th:for="|ingredient=${ingredient.id}|">[[*{getName()}]]</label>
+                </div>
+
+            </li>
+        </ul>
+
+        <!-- name  -->
+        <div class="mb-3">
+            <label for="" class="form-label">Name</label>
+            <input th:field="*{name}" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                placeholder="Marinara" th:errorClass="is-invalid" />
+            <small th:unless="${#fields.hasErrors('name')}" id="helpId" class="form-text text-muted">
+                Insert the name of
+                the
+                new pizza
+            </small>
+            <small th:each="err : ${#fields.errors('name')}" th:text="${err}" th:if="${#fields.hasErrors('name')}"
+                id="helpId" class="form-text text-muted invalid-feedback">[[${err}]]</small>
+        </div>
+
+        <!-- price  -->
+        <div class="mb-3">
+            <label for="" class="form-label">Price</label>
+            <input th:field="*{price}" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                placeholder="12.50" th:errorClass="is-invalid" />
+            <small th:unless="${#fields.hasErrors('price')}" id="helpId" class="form-text text-muted">Insert the price
+                of
+                the
+                new pizza</small>
+            <small th:each="err : ${#fields.errors('price')}" th:text="${err}" th:if="${#fields.hasErrors('price')}"
+                id="helpId" class="form-text text-muted invalid-feedback">[[${err}]]</small>
+        </div>
+
+        <!-- image  -->
+        <div class="mb-3">
+            <label for="" class="form-label">Image</label>
+            <input th:field="*{image}" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                placeholder="imgurl.jpg" th:errorClass="is-invalid" />
+            <small th:unless="${#fields.hasErrors('image')}" id="helpId" class="form-text text-muted">Insert the image
+                of
+                the
+                new pizza</small>
+            <small th:each="err : ${#fields.errors('image')}" th:text="${err}" th:if="${#fields.hasErrors('image')}"
+                id="helpId" class="form-text text-muted invalid-feedback">[[${err}]]</small>
+        </div>
+
+        <!-- description  -->
+        <div class="mb-3">
+            <label for="" class="form-label">Description</label>
+            <input th:field="*{description}" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                placeholder="very cool pizza" th:errorClass="is-invalid" />
+            <small th:unless="${#fields.hasErrors('description')}" id="helpId" class="form-text text-muted">Insert the
+                description
+                of
+                the
+                new pizza</small>
+            <small th:each="err : ${#fields.errors('description')}" th:text="${err}"
+                th:if="${#fields.hasErrors('description')}" id="helpId"
+                class="form-text text-muted invalid-feedback">[[${err}]]</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+
+    </form>
+</th:block>

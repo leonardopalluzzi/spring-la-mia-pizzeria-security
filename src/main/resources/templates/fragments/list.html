@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<th:block th:fragmnet="card(img, title, description, price)">
+    <div class="card">
+        <div class="card-header">
+            <img th:src=@{img} alt="card image">
+        </div>
+        <div class="card-body">
+            <h3>[[${title}]]</h3>
+            <p>[[${description}]]</p>
+            <label for="">[[${price}]]€</label>
+        </div>
+    </div>
+</th:block>
+
+
+</html>

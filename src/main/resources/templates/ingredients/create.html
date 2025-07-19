@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>Pizza</title>
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+
+    <main>
+        <section class="my-5">
+            <div class="container">
+                <h1>Add a new Ingredient:</h1>
+                <form th:action="${edit} ? @{/ingredients/update} : @{/ingredients/create}" method="POST"
+                    th:object="${ingredient}">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Name</label>
+                        <input th:field="*{name}" type="text" class="form-control" name="" id=""
+                            aria-describedby="helpId" placeholder="Basil" th:errorClass="is-invalid" />
+                        <small th:unless="${#fields.hasErrors('name')}" id="helpId" class="form-text text-muted">Add the
+                            ingredient name</small>
+                        <small th:each="err : ${#fields.hasErrors('name')}" th:if="${#fields.hasErrors('name')}"
+                            class="form-text text-muted invalid-feedback">[[${err}]]</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+
+                </form>
+
+
+
+            </div>
+        </section>
+    </main>
+
+
+
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>Pizzas</title>
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+    <div class="container my-5">
+        <h1 th:unless="${edit}">Create a promotion for the pizza: [[${promotion.getPizza().getName()}]]</h1>
+        <h1 th:if="${edit}">Update the "[[${promotion.getTitle()}]]" promotion for the pizza:
+            [[${promotion.getPizza().getName()}]]</h1>
+
+        <div th:if="${errorMessage}" class="text-center">
+            <p class="alert alert-warning">[[${errorMessage}]]</p>
+        </div>
+        <form th:action="${edit} ? @{/promotions/update} : @{/promotions/create}" method="POST"
+            th:object="${promotion}">
+
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{pizza}">
+
+            <!-- name  -->
+            <div class="mb-3">
+                <label for="" class="form-label">Name</label>
+                <input th:field="*{title}" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                    placeholder="New Year Promo" th:errorClass="is-invalid" />
+                <small th:unless="${#fields.hasErrors('title')}" id="helpId" class="form-text text-muted">
+                    Insert the name of
+                    the
+                    new promotion
+                </small>
+                <small th:each="err : ${#fields.errors('title')}" th:text="${err}" th:if="${#fields.hasErrors('title')}"
+                    id="helpId" class="form-text text-muted invalid-feedback">[[${err}]]</small>
+            </div>
+
+            <!-- discount  -->
+            <div class="mb-3">
+                <label for="" class="form-label">Discount</label>
+                <input th:field="*{discount}" type="text" class="form-control" name="" id="" aria-describedby="helpId"
+                    placeholder="10" th:errorClass="is-invalid" />
+                <small th:unless="${#fields.hasErrors('discount')}" id="helpId" class="form-text text-muted">Insert the
+                    discount
+                    of
+                    the
+                    new promotion</small>
+                <small th:each="err : ${#fields.errors('discount')}" th:text="${err}"
+                    th:if="${#fields.hasErrors('discount')}" id="helpId"
+                    class="form-text text-muted invalid-feedback">[[${err}]]</small>
+            </div>
+
+            <!-- start date  -->
+            <div class="mb-3">
+                <label for="" class="form-label">Start date</label>
+                <input th:field="*{startDate}" value="*{startDate}" type="date" class="form-control" name="" id=""
+                    aria-describedby="helpId" placeholder="" th:errorClass="is-invalid" />
+                <small th:unless="${#fields.hasErrors('startDate')}" id="helpId" class="form-text text-muted">Insert the
+                    start date
+                    of
+                    the
+                    new promotion</small>
+                <small th:each="err : ${#fields.errors('startDate')}" th:text="${err}"
+                    th:if="${#fields.hasErrors('startDate')}" id="helpId"
+                    class="form-text text-muted invalid-feedback">[[${err}]]</small>
+            </div>
+
+            <!-- end date  -->
+            <div class="mb-3">
+                <label for="" class="form-label">End Date</label>
+                <input th:field="*{endDate}" type="date" class="form-control" name="" id="" aria-describedby="helpId"
+                    placeholder="" th:errorClass="is-invalid" />
+                <small th:unless="${#fields.hasErrors('endDate')}" id="helpId" class="form-text text-muted">Insert the
+                    end date
+                    of
+                    the
+                    new promotion</small>
+                <small th:each="err : ${#fields.errors('endDate')}" th:text="${err}"
+                    th:if="${#fields.hasErrors('endDate')}" id="helpId"
+                    class="form-text text-muted invalid-feedback">[[${err}]]</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+
+        </form>
+    </div>
+
+
+
+
+
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+
+</body>
+
+</html>

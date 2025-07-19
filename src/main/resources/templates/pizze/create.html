@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>Pizza</title>
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+
+    <main>
+        <section class="my-5">
+            <div class="container">
+                <h1>Add a new Pizza:</h1>
+
+                <div th:replace="~{fragments/pizzaForm :: pizzaForm(${pizza}, ${endpoint})}"></div>
+
+            </div>
+        </section>
+    </main>
+
+
+
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+
+</body>
+
+</html>

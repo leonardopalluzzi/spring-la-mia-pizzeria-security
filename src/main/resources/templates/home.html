@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>Pizzas</title>
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+    <th:block th:if="${pizzas.size() > 0}">
+        <th:block
+            th:replace="~{fragments/jumbo :: jumbo(${pizzas[0].getImage()}, ${pizzas[0].getName()}, ${pizzas[0].getDescription()}, ${pizzas[0].getId()}, true, 'This month sale')}">
+        </th:block>
+    </th:block>
+
+    <th:block th:unless="${pizzas.size() > 0}">
+        <h1></h1>
+    </th:block>
+
+    <main>
+        <!-- banner about us  -->
+        <section class="home_section about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <h2>Pizzeria Roma, since 1800</h2>
+                        <img class="w-100 rounded-5"
+                            th:src="@{https://as1.ftcdn.net/v2/jpg/03/19/71/38/1000_F_319713812_6J60pb0X8yf2VzlajNvDzxUJUf6c20yy.jpg}"
+                            alt="resturant image">
+                    </div>
+                    <div class="col-8 p-5">
+                        <p>
+                            Since 1800, Pizzeria Roma has been bringing the authentic taste of traditional Italian pizza
+                            to our community. Passed down through generations, our passion for genuine ingredients and
+                            time-honored recipes makes every slice a true experience of Rome’s culinary heritage. We
+                            welcome you to enjoy a piece of history, served fresh from our oven to your table.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- banner cta al menu  -->
+        <section class="home_section menu_cta">
+            <div class="container">
+                <div class="row">
+                    <div
+                        class="col-4 d-flex aling-item-center justify-content-center flex-column text-center border p-3 rounded-5">
+                        <h4 for="">Take a look at our menu!</h4>
+                        <i class="bi bi-fork-knife fs-1"></i> <br>
+                        <a class="btn btn-primary" th:href="@{/menu?page=0&limit=5}">Menu</a>
+                    </div>
+                    <div class="col-8 py-5">
+                        <div class="row row-cols-5 align-item-center justify-content-center">
+                            <div class="col-1" th:each="pizza : ${pizzas}" th:object="${pizza}">
+                                <img class="rounded rounded-5" th:src="@{*{getImage()}}" th:alt="*{getName()}">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- info sul ristorante  -->
+        <section class="home_section hoven">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <h2>Wood-fired Oven</h2>
+                        <img class="w-100 rounded-5"
+                            th:src="@{https://t4.ftcdn.net/jpg/01/24/44/83/240_F_124448337_93POEU9DoEEk1cHzet8ZLtoQLGgmnSXn.jpg}"
+                            alt="resturant image">
+
+                    </div>
+                    <div class="col-8">
+                        <p class="p-5">
+                            At Pizzeria Roma, we take pride in offering the best pizza in Rome, crafted with care and
+                            tradition. Our kitchen uses only the finest local ingredients, and every pizza is baked to
+                            perfection in our traditional wood-fired oven. This dedication to authentic methods ensures
+                            a unique flavor and crispness you won’t find anywhere else.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+
+</body>
+
+</html>

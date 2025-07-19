@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>Pizza</title>
+</head>
+
+<body>
+    <header>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+    </header>
+    <th:block th:if="${pizza != null}">
+        <th:block
+            th:replace="~{fragments/jumbo :: jumbo(${pizza.getImage()}, ${pizza.getName()}, '', ${pizza.getId()}, false, Pizza)}">
+        </th:block>
+    </th:block>
+
+    <th:block th:unless="${pizza != null}">
+
+        <h1></h1>
+    </th:block>
+
+    <main>
+        <section class="my-5">
+            <div class="container">
+                <div th:if="${pizza != null}" th:object="${pizza}">
+                    <div class="row">
+                        <div class="col">
+                            <img class="w-100 rounded-5" th:src="@{*{getImage()}}" alt="">
+                        </div>
+                        <div class="col">
+                            <h1>[[*{getName()}]]</h1>
+                            <h2 class="badge text-bg-success fs-2 my-4">[[*{getPrice()}]]€</h2>
+                            <p class="fs-4 border rounded-5 p-4">[[*{getDescription()}]]</p>
+                            <p>
+                            <h4>Ingredients:</h4>
+                            <ul class="list-unstyled fs-5 row row-cols-3">
+                                <li class="col" th:each="ingredient : *{getIngredients}" th:object="${ingredient}">
+                                    [[*{name}]]
+                                </li>
+                            </ul>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div th:unless="${pizza != null}">
+                    <h1>This Pizza is not available</h1>
+                </div>
+
+
+                <div class="my-4 d-flex align-items-center justify-content-end">
+                    <a th:href="@{/menu/promotions/{id}/create(id = ${pizza.getId()})}" class="btn btn-primary">Add a
+                        new promotion</a>
+                </div>
+
+                <div th:unless="${pizza.getPromotions().size() > 0}" class="alert alert-warning my-5 text-center">
+                    <h3>There are no promotions on this pizza</h3>
+                </div>
+                <table class="table" th:if="${pizza.getPromotions().size() > 0}">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Start date</th>
+                            <th scope="col">end date</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="promotion : ${pizza.getPromotions()}" th:object="${promotion}">
+                            <th scope="row">[[*{getTitle()}]]</th>
+                            <td>[[*{getStartDate()}]]</td>
+                            <td>[[*{getEndDate()}]]</td>
+                            <td>[[*{getDiscount()}]]</td>
+                            <td>
+                                <a th:href="@{/promotions/{id}/edit(id = *{getId()})}" class="btn btn-primary"><i
+                                        class="bi bi-pencil-fill"></i></a>
+                                <!-- Button trigger modal -->
+                                <div class="col">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        th:data-bs-target="'#modal-' + *{getId()}">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" th:id="'modal-' + *{getId()}" tabindex="-1"
+                                    aria-labelledby="modalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="modalLabel">Confirm deleting
+                                                    operation</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want
+                                                to delete the promotion: [[*{getTitle()}]]?
+                                                Press delete to confirm, press close to exit without confirming
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <form th:action="@{/promotions/{id}/delete(id=*{getId()})}"
+                                                    method="POST">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+
+
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+
+</body>
+
+</html>
