@@ -50,7 +50,7 @@
                 </div>
 
 
-                <div class="my-4 d-flex align-items-center justify-content-end">
+                <div class="my-4 d-flex align-items-center justify-content-end" sec:authorize="hasAuthority('ADMIN')">
                     <a th:href="@{/menu/promotions/{id}/create(id = ${pizza.getId()})}" class="btn btn-primary">Add a
                         new promotion</a>
                 </div>
@@ -65,7 +65,7 @@
                             <th scope="col">Start date</th>
                             <th scope="col">end date</th>
                             <th scope="col">Discount</th>
-                            <th scope="col">Actions</th>
+                            <th scope="col" sec:authorize="hasAuthority('ADMIN')">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,7 +74,7 @@
                             <td>[[*{getStartDate()}]]</td>
                             <td>[[*{getEndDate()}]]</td>
                             <td>[[*{getDiscount()}]]</td>
-                            <td>
+                            <td sec:authorize="hasAuthority('ADMIN')">
                                 <a th:href="@{/promotions/{id}/edit(id = *{getId()})}" class="btn btn-primary"><i
                                         class="bi bi-pencil-fill"></i></a>
                                 <!-- Button trigger modal -->
