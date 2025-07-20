@@ -28,7 +28,8 @@ public class SecurityConfiguration {
                 .requestMatchers("/**").permitAll()
                 .and().formLogin()
                 .and().logout()
-                .and().exceptionHandling();
+                .and().exceptionHandling()
+                .and().csrf().disable();
         return http.build();
     }
 
