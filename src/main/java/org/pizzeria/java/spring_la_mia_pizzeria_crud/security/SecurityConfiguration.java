@@ -29,7 +29,8 @@ public class SecurityConfiguration {
                 .and().formLogin()
                 .and().logout()
                 .and().exceptionHandling()
-                .and().csrf().disable();
+                .and().csrf().disable(); // solo in testing, in produzione se si vuole disattivare bisogna implementare
+                                         // meccanismo autenticazione
         return http.build();
     }
 
